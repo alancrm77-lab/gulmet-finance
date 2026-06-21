@@ -1,25 +1,97 @@
-# CODING AGENTS: READ THIS FIRST
+# Gulmet Kulmedov — Financial Advisor Website
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+A multi-language marketing site for **Gulmet Kulmedov**, a Seattle-based
+financial professional who represents **New York Life**. Built from a Claude
+Design prototype (see [`project/`](./project) and [`chats/`](./chats) for the
+original handoff bundle).
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+## Features
 
-## What you should do — IMPORTANT
+- **Four languages** — English, Русский (Russian), Türkçe (Turkish), and
+  Türkmençe (Turkmen) — switchable in the header, with **browser auto-detect**
+  and choice persistence via `localStorage` (`gk_lang`).
+- **Four pages** — Home, About, Services, Contact — with real routes.
+- **Navy/gold institutional theme** on warm cream, Source Serif 4 +
+  Source Sans 3, with Gulmet's portrait on the Home and About pages.
+- Animated **service cards** (lift, gold top-bar sweep, icon scale, title shift,
+  sliding arrow) and **"Why work with me"** rows (indent, gold accent, number
+  scale) — all CSS-driven.
+- A **contact form wired to [Web3Forms](https://web3forms.com)** plus the
+  @gulmetfinance Instagram link.
+- Responsive: multi-column layouts collapse to a single column on small screens,
+  and `prefers-reduced-motion` is respected.
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+## Tech stack
 
-**Read `project/Gulmet Kulmedov.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+React 18 · TypeScript · Vite · React Router.
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## Getting started
 
-## About the design files
+```bash
+npm install
+cp .env.example .env      # then add your Web3Forms access key
+npm run dev               # start the dev server
+```
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+### Other scripts
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start the Vite dev server            |
+| `npm run build`   | Type-check and build to `dist/`      |
+| `npm run preview` | Serve the production build locally   |
+| `npm run lint`    | Type-check only (`tsc --noEmit`)     |
 
-## Bundle contents
+## Configuration
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Gulmet's Finance Website` project files (HTML prototypes, assets, components)
+### Contact form (Web3Forms)
+
+The contact form posts to Web3Forms. Get a free access key at
+[web3forms.com](https://web3forms.com) (you enter the email address where
+submissions should land), then set it in `.env`:
+
+```
+VITE_WEB3FORMS_KEY=your-web3forms-access-key-here
+```
+
+Without a key the form shows a friendly error and logs a console warning.
+
+### Contact details
+
+The email, phone, and office address are **placeholders**. Swap in real values
+in [`src/data/site.ts`](./src/data/site.ts). The Instagram link there is live.
+
+## Project structure
+
+```
+src/
+  main.tsx                 # entry: router + language provider
+  App.tsx                  # layout, routes, scroll-to-top
+  index.css                # full theme + component styles
+  data/site.ts             # languages, contact info, Instagram URL
+  hooks/useLanguage.tsx    # language context, auto-detect, persistence
+  i18n/
+    types.ts               # translation shape
+    translations.ts        # en / ru / tr / tk copy
+  components/
+    Header.tsx  Footer.tsx  CtaBand.tsx  icons.tsx
+    pages/  Home.tsx  About.tsx  Services.tsx  Contact.tsx
+public/
+  assets/gulmet.png        # portrait
+  favicon.svg              # GK monogram
+```
+
+## Deployment
+
+This is a static SPA. `npm run build` outputs to `dist/`. Deploy that folder to
+any static host (Vercel, Netlify, Cloudflare Pages, GitHub Pages…). Because it
+uses client-side routing, configure an **SPA fallback** so deep links resolve to
+`index.html` (Vercel/Netlify do this automatically).
+
+## Notes
+
+- The Russian and Turkish copy was reviewed during the design phase; the
+  **Turkmen** translations are the hardest to get perfectly idiomatic and are
+  worth a final eye-check by Gulmet.
+- "New York Life" appears as a text reference only — no logo or branding is
+  reproduced.
