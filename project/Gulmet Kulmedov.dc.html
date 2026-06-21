@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #f4f1ea; }
+  a { color: inherit; }
+  input, select, textarea, button { font-family: inherit; }
+  ::selection { background: #b18f54; color: #fff; }
+  @keyframes gkFadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes gkFade { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#f4f1ea; font-family:'Source Sans 3', system-ui, sans-serif; color:#13283f; -webkit-font-smoothing:antialiased; overflow-x:hidden;">
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:sticky; top:0; z-index:100; background:rgba(244,241,234,0.86); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(19,40,63,0.10);">
+    <div style="max-width:1240px; margin:0 auto; padding:14px clamp(20px,4vw,48px); display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <div onClick="{{ goHome }}" style="display:flex; align-items:center; gap:13px; cursor:pointer; flex:none;">
+        <div style="width:44px; height:44px; flex:none; background:#0e2238; border:1px solid #b18f54; display:flex; align-items:center; justify-content:center; font-family:'Source Serif 4', serif; font-weight:600; font-size:19px; letter-spacing:0.5px; color:#c9a86a;">GK</div>
+        <div style="line-height:1.15;">
+          <div style="font-family:'Source Serif 4', serif; font-size:18px; font-weight:600; color:#0e2238;">Gulmet Kulmedov</div>
+          <div style="font-size:10.5px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#7d6a45;">{{ t.nav.role }}</div>
+        </div>
+      </div>
+
+      <nav style="display:flex; align-items:center; gap:clamp(14px,2vw,30px); flex-wrap:wrap;">
+        <button onClick="{{ goHome }}" style-hover="color:#0e2238" style="background:none; border:none; cursor:pointer; padding:6px 0; font-size:15px; font-weight:600; color:{{ homeColor }}; border-bottom:2px solid {{ homeBorder }};">{{ t.nav.home }}</button>
+        <button onClick="{{ goAbout }}" style-hover="color:#0e2238" style="background:none; border:none; cursor:pointer; padding:6px 0; font-size:15px; font-weight:600; color:{{ aboutColor }}; border-bottom:2px solid {{ aboutBorder }};">{{ t.nav.about }}</button>
+        <button onClick="{{ goServices }}" style-hover="color:#0e2238" style="background:none; border:none; cursor:pointer; padding:6px 0; font-size:15px; font-weight:600; color:{{ servicesColor }}; border-bottom:2px solid {{ servicesBorder }};">{{ t.nav.services }}</button>
+        <button onClick="{{ goContact }}" style-hover="color:#0e2238" style="background:none; border:none; cursor:pointer; padding:6px 0; font-size:15px; font-weight:600; color:{{ contactColor }}; border-bottom:2px solid {{ contactBorder }};">{{ t.nav.contact }}</button>
+
+        <div style="display:flex; align-items:center; gap:5px; padding-left:6px; border-left:1px solid rgba(19,40,63,0.14); margin-left:2px;">
+          <sc-for list="{{ langButtons }}" as="l" hint-placeholder-count="4">
+            <button onClick="{{ l.onClick }}" title="{{ l.native }}" style="display:flex; align-items:center; gap:5px; background:{{ l.bg }}; border:1px solid {{ l.border }}; border-radius:2px; cursor:pointer; padding:5px 8px; font-size:12px; font-weight:700; letter-spacing:0.5px; color:{{ l.color }};">
+              <span style="font-size:13px; line-height:1;">{{ l.flag }}</span>{{ l.code }}
+            </button>
+          </sc-for>
+        </div>
+
+        <button onClick="{{ goContact }}" style-hover="background:#16314f" style="background:#0e2238; border:1px solid #0e2238; color:#f4f1ea; cursor:pointer; padding:10px 18px; font-size:14px; font-weight:600; border-radius:2px; box-shadow:0 1px 0 #b18f54;">{{ t.nav.cta }}</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HOME ============ -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <!-- HERO -->
+      <section style="max-width:1240px; margin:0 auto; padding:clamp(40px,6vw,84px) clamp(20px,4vw,48px) clamp(36px,4vw,60px); display:grid; grid-template-columns:1.08fr 0.92fr; gap:clamp(32px,5vw,72px); align-items:center;">
+        <div style="animation:gkFadeUp 0.7s ease both;">
+          <div style="display:inline-flex; align-items:center; gap:9px; font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:24px;">
+            <span style="width:26px; height:1px; background:#b18f54; display:inline-block;"></span>{{ t.hero.eyebrow }}
+          </div>
+          <h1 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(34px,4.8vw,60px); line-height:1.08; letter-spacing:-0.5px; color:#0e2238; margin:0 0 22px; text-wrap:balance;">{{ t.hero.title }}</h1>
+          <p style="font-size:clamp(16px,1.3vw,19px); line-height:1.6; color:#46566a; max-width:30em; margin:0 0 32px;">{{ t.hero.subtitle }}</p>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:38px;">
+            <button onClick="{{ goContact }}" style-hover="background:#16314f" style="background:#0e2238; border:1px solid #0e2238; color:#f4f1ea; cursor:pointer; padding:15px 28px; font-size:15.5px; font-weight:600; border-radius:2px; box-shadow:0 1px 0 #b18f54;">{{ t.hero.ctaPrimary }}</button>
+            <button onClick="{{ goServices }}" style-hover="background:rgba(14,34,56,0.04)" style="background:none; border:1px solid rgba(19,40,63,0.28); color:#0e2238; cursor:pointer; padding:15px 26px; font-size:15.5px; font-weight:600; border-radius:2px;">{{ t.hero.ctaSecondary }}</button>
+          </div>
+          <div>
+            <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#94836a; margin-bottom:12px;">{{ t.hero.langsLabel }}</div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <sc-for list="{{ langDisplay }}" as="l" hint-placeholder-count="4">
+                <div style="display:flex; align-items:center; gap:8px; background:#fbfaf6; border:1px solid rgba(19,40,63,0.12); border-radius:2px; padding:8px 13px; font-size:14px; font-weight:600; color:#33465c;">
+                  <span style="font-size:16px; line-height:1;">{{ l.flag }}</span>{{ l.native }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:relative; animation:gkFade 1s ease both;">
+          <div style="position:absolute; inset:14px -14px -14px 14px; border:1px solid #b18f54; z-index:0;"></div>
+          <div style="position:relative; z-index:1; overflow:hidden; background:#0e2238; box-shadow:0 24px 60px -30px rgba(14,34,56,0.55);">
+            <img src="assets/gulmet.png" alt="Gulmet Kulmedov" style="display:block; width:100%; height:clamp(420px,52vw,580px); object-fit:cover; object-position:center top;">
+          </div>
+          <div style="position:absolute; z-index:2; bottom:22px; left:-18px; background:#f4f1ea; border:1px solid rgba(19,40,63,0.12); padding:13px 18px; box-shadow:0 14px 34px -16px rgba(14,34,56,0.4);">
+            <div style="display:flex; align-items:center; gap:9px;">
+              <span style="width:8px; height:8px; border-radius:50%; background:#b18f54; display:inline-block; flex:none;"></span>
+              <span style="font-family:'Source Serif 4', serif; font-size:16px; font-weight:600; color:#0e2238;">{{ t.hero.location }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES PREVIEW -->
+      <section style="background:#fbfaf6; border-top:1px solid rgba(19,40,63,0.08); border-bottom:1px solid rgba(19,40,63,0.08);">
+        <div style="max-width:1240px; margin:0 auto; padding:clamp(54px,6vw,88px) clamp(20px,4vw,48px);">
+          <div style="text-align:center; max-width:40em; margin:0 auto 52px;">
+            <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:16px;">{{ t.servicesIntro.eyebrow }}</div>
+            <h2 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(28px,3.4vw,42px); line-height:1.12; letter-spacing:-0.4px; color:#0e2238; margin:0 0 16px; text-wrap:balance;">{{ t.servicesIntro.title }}</h2>
+            <p style="font-size:17px; line-height:1.55; color:#5a6b7e; margin:0;">{{ t.servicesIntro.subtitle }}</p>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(248px, 1fr)); gap:18px;">
+            <div onClick="{{ goServices }}" onMouseEnter="{{ c0.enter }}" onMouseLeave="{{ leaveSvc }}" style="position:relative; overflow:hidden; background:#fff; border:1px solid {{ c0.border }}; border-radius:2px; padding:38px 30px; cursor:pointer; transform:{{ c0.t }}; box-shadow:{{ c0.sh }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1), box-shadow 0.45s ease, border-color 0.45s ease;">
+              <div style="position:absolute; top:0; left:0; width:100%; height:3px; background:#b18f54; transform:scaleX({{ c0.bar }}); transform-origin:left center; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"></div>
+              <div style="position:absolute; top:34px; right:28px; width:30px; height:30px; border:1px solid #b18f54; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#b18f54; font-size:14px; opacity:{{ c0.aOp }}; transform:translateX({{ c0.aX }}); transition:opacity 0.4s ease, transform 0.45s cubic-bezier(.2,.8,.2,1);">→</div>
+              <div style="display:inline-block; margin-bottom:22px; transform:{{ c0.ic }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="#0e2238" stroke-width="1.5"><circle cx="14" cy="14" r="11"></circle><circle cx="14" cy="14" r="5" stroke="#b18f54"></circle><circle cx="14" cy="14" r="1.6" fill="#b18f54" stroke="none"></circle></svg></div>
+              <h3 style="font-family:'Source Serif 4', serif; font-size:20px; font-weight:600; color:{{ c0.title }}; margin:0 0 10px; transition:color 0.35s ease;">{{ s0.name }}</h3>
+              <p style="font-size:14.5px; line-height:1.55; color:#5a6b7e; margin:0;">{{ s0.short }}</p>
+            </div>
+            <div onClick="{{ goServices }}" onMouseEnter="{{ c1.enter }}" onMouseLeave="{{ leaveSvc }}" style="position:relative; overflow:hidden; background:#fff; border:1px solid {{ c1.border }}; border-radius:2px; padding:38px 30px; cursor:pointer; transform:{{ c1.t }}; box-shadow:{{ c1.sh }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1), box-shadow 0.45s ease, border-color 0.45s ease;">
+              <div style="position:absolute; top:0; left:0; width:100%; height:3px; background:#b18f54; transform:scaleX({{ c1.bar }}); transform-origin:left center; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"></div>
+              <div style="position:absolute; top:34px; right:28px; width:30px; height:30px; border:1px solid #b18f54; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#b18f54; font-size:14px; opacity:{{ c1.aOp }}; transform:translateX({{ c1.aX }}); transition:opacity 0.4s ease, transform 0.45s cubic-bezier(.2,.8,.2,1);">→</div>
+              <div style="display:inline-block; margin-bottom:22px; transform:{{ c1.ic }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="#0e2238" stroke-width="1.5"><rect x="3" y="17" width="5" height="8"></rect><rect x="11.5" y="11" width="5" height="14"></rect><rect x="20" y="4" width="5" height="21" stroke="#b18f54"></rect></svg></div>
+              <h3 style="font-family:'Source Serif 4', serif; font-size:20px; font-weight:600; color:{{ c1.title }}; margin:0 0 10px; transition:color 0.35s ease;">{{ s1.name }}</h3>
+              <p style="font-size:14.5px; line-height:1.55; color:#5a6b7e; margin:0;">{{ s1.short }}</p>
+            </div>
+            <div onClick="{{ goServices }}" onMouseEnter="{{ c2.enter }}" onMouseLeave="{{ leaveSvc }}" style="position:relative; overflow:hidden; background:#fff; border:1px solid {{ c2.border }}; border-radius:2px; padding:38px 30px; cursor:pointer; transform:{{ c2.t }}; box-shadow:{{ c2.sh }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1), box-shadow 0.45s ease, border-color 0.45s ease;">
+              <div style="position:absolute; top:0; left:0; width:100%; height:3px; background:#b18f54; transform:scaleX({{ c2.bar }}); transform-origin:left center; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"></div>
+              <div style="position:absolute; top:34px; right:28px; width:30px; height:30px; border:1px solid #b18f54; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#b18f54; font-size:14px; opacity:{{ c2.aOp }}; transform:translateX({{ c2.aX }}); transition:opacity 0.4s ease, transform 0.45s cubic-bezier(.2,.8,.2,1);">→</div>
+              <div style="display:inline-block; margin-bottom:22px; transform:{{ c2.ic }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="#0e2238" stroke-width="1.5"><circle cx="14" cy="14" r="11"></circle><path d="M14 7 L14 14 L19 17" stroke="#b18f54"></path></svg></div>
+              <h3 style="font-family:'Source Serif 4', serif; font-size:20px; font-weight:600; color:{{ c2.title }}; margin:0 0 10px; transition:color 0.35s ease;">{{ s2.name }}</h3>
+              <p style="font-size:14.5px; line-height:1.55; color:#5a6b7e; margin:0;">{{ s2.short }}</p>
+            </div>
+            <div onClick="{{ goServices }}" onMouseEnter="{{ c3.enter }}" onMouseLeave="{{ leaveSvc }}" style="position:relative; overflow:hidden; background:#fff; border:1px solid {{ c3.border }}; border-radius:2px; padding:38px 30px; cursor:pointer; transform:{{ c3.t }}; box-shadow:{{ c3.sh }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1), box-shadow 0.45s ease, border-color 0.45s ease;">
+              <div style="position:absolute; top:0; left:0; width:100%; height:3px; background:#b18f54; transform:scaleX({{ c3.bar }}); transform-origin:left center; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"></div>
+              <div style="position:absolute; top:34px; right:28px; width:30px; height:30px; border:1px solid #b18f54; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#b18f54; font-size:14px; opacity:{{ c3.aOp }}; transform:translateX({{ c3.aX }}); transition:opacity 0.4s ease, transform 0.45s cubic-bezier(.2,.8,.2,1);">→</div>
+              <div style="display:inline-block; margin-bottom:22px; transform:{{ c3.ic }}; transition:transform 0.45s cubic-bezier(.2,.8,.2,1);"><svg width="30" height="30" viewBox="0 0 28 28" fill="none" stroke="#0e2238" stroke-width="1.5"><path d="M14 3 L25 14 L14 25 L3 14 Z"></path><path d="M14 10 L18 14 L14 18 L10 14 Z" stroke="#b18f54"></path></svg></div>
+              <h3 style="font-family:'Source Serif 4', serif; font-size:20px; font-weight:600; color:{{ c3.title }}; margin:0 0 10px; transition:color 0.35s ease;">{{ s3.name }}</h3>
+              <p style="font-size:14.5px; line-height:1.55; color:#5a6b7e; margin:0;">{{ s3.short }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY -->
+      <section style="max-width:1240px; margin:0 auto; padding:clamp(56px,6vw,92px) clamp(20px,4vw,48px); display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(36px,5vw,72px); align-items:start;">
+        <div style="position:sticky; top:96px;">
+          <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:16px;">{{ t.why.eyebrow }}</div>
+          <h2 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(28px,3.4vw,42px); line-height:1.12; letter-spacing:-0.4px; color:#0e2238; margin:0 0 18px; text-wrap:balance;">{{ t.why.title }}</h2>
+          <p style="font-size:17px; line-height:1.6; color:#5a6b7e; margin:0;">{{ t.why.subtitle }}</p>
+        </div>
+        <div style="display:flex; flex-direction:column;">
+          <sc-for list="{{ whyPoints }}" as="p" hint-placeholder-count="4">
+            <div onMouseEnter="{{ p.enter }}" onMouseLeave="{{ leaveWhy }}" style="display:flex; gap:22px; padding:26px 22px 26px {{ p.pad }}; border-top:1px solid rgba(19,40,63,0.12); background:{{ p.bg }}; box-shadow:{{ p.accent }}; cursor:default; transition:padding 0.4s cubic-bezier(.2,.8,.2,1), background 0.4s ease, box-shadow 0.4s ease;">
+              <div style="font-family:'Source Serif 4', serif; font-size:22px; font-weight:500; color:{{ p.numColor }}; flex:none; width:34px; line-height:1.2; transform:{{ p.numT }}; transform-origin:left center; transition:transform 0.4s cubic-bezier(.2,.8,.2,1), color 0.35s ease;">{{ p.num }}</div>
+              <div>
+                <h3 style="font-family:'Source Serif 4', serif; font-size:21px; font-weight:600; color:{{ p.titleColor }}; margin:0 0 8px; transition:color 0.35s ease;">{{ p.title }}</h3>
+                <p style="font-size:15.5px; line-height:1.6; color:#5a6b7e; margin:0;">{{ p.desc }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ============ ABOUT ============ -->
+    <sc-if value="{{ isAbout }}">
+    <div style="animation:gkFade 0.5s ease both;">
+      <section style="max-width:1240px; margin:0 auto; padding:clamp(40px,5vw,76px) clamp(20px,4vw,48px) clamp(36px,4vw,56px); display:grid; grid-template-columns:0.82fr 1.18fr; gap:clamp(36px,5vw,72px); align-items:start;">
+        <div style="position:relative;">
+          <div style="position:absolute; inset:14px -14px -14px 14px; border:1px solid #b18f54; z-index:0;"></div>
+          <div style="position:relative; z-index:1; overflow:hidden; background:#0e2238; box-shadow:0 24px 60px -30px rgba(14,34,56,0.5);">
+            <img src="assets/gulmet.png" alt="Gulmet Kulmedov" style="display:block; width:100%; height:clamp(420px,46vw,560px); object-fit:cover; object-position:center top;">
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:16px;">{{ t.about.eyebrow }}</div>
+          <h1 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(32px,4vw,52px); line-height:1.08; letter-spacing:-0.5px; color:#0e2238; margin:0 0 6px;">{{ t.about.title }}</h1>
+          <div style="font-size:13.5px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:#94836a; margin-bottom:26px;">{{ t.about.role }}</div>
+          <p style="font-family:'Source Serif 4', serif; font-size:clamp(19px,1.6vw,23px); line-height:1.5; color:#28394d; margin:0 0 24px; font-weight:400;">{{ t.about.lead }}</p>
+          <p style="font-size:16.5px; line-height:1.68; color:#52627560; margin:0 0 18px; color:#52627a;">{{ t.about.body1 }}</p>
+          <p style="font-size:16.5px; line-height:1.68; color:#52627a; margin:0 0 34px;">{{ t.about.body2 }}</p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px; border-top:1px solid rgba(19,40,63,0.12); padding-top:30px;">
+            <div>
+              <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#94836a; margin-bottom:16px;">{{ t.about.focusTitle }}</div>
+              <div style="display:flex; flex-direction:column; gap:11px;">
+                <sc-for list="{{ focusList }}" as="f" hint-placeholder-count="4">
+                  <div style="display:flex; align-items:center; gap:11px; font-size:15.5px; font-weight:600; color:#28394d;">
+                    <span style="width:7px; height:7px; background:#b18f54; transform:rotate(45deg); display:inline-block; flex:none;"></span>{{ f }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#94836a; margin-bottom:16px;">{{ t.about.langTitle }}</div>
+              <div style="display:flex; flex-direction:column; gap:11px;">
+                <sc-for list="{{ langDisplay }}" as="l" hint-placeholder-count="4">
+                  <div style="display:flex; align-items:center; gap:10px; font-size:15.5px; font-weight:600; color:#28394d;">
+                    <span style="font-size:17px; line-height:1;">{{ l.flag }}</span>{{ l.native }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUES BAND -->
+      <section style="background:#0e2238; color:#f4f1ea;">
+        <div style="max-width:1240px; margin:0 auto; padding:clamp(48px,5vw,76px) clamp(20px,4vw,48px);">
+          <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#c9a86a; margin-bottom:36px;">{{ t.about.valuesTitle }}</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:clamp(28px,4vw,56px);">
+            <sc-for list="{{ aboutValues }}" as="v" hint-placeholder-count="3">
+              <div>
+                <div style="font-family:'Source Serif 4', serif; font-size:30px; font-weight:500; color:#c9a86a; margin-bottom:14px; line-height:1;">{{ v.num }}</div>
+                <div style="font-family:'Source Serif 4', serif; font-size:22px; font-weight:500; line-height:1.3; color:#f4f1ea;">{{ v.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ============ SERVICES ============ -->
+    <sc-if value="{{ isServices }}">
+    <div style="animation:gkFade 0.5s ease both;">
+      <section style="max-width:1240px; margin:0 auto; padding:clamp(44px,5vw,80px) clamp(20px,4vw,48px) clamp(20px,3vw,36px);">
+        <div style="max-width:42em;">
+          <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:16px;">{{ t.servicesIntro.eyebrow }}</div>
+          <h1 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(32px,4vw,52px); line-height:1.08; letter-spacing:-0.5px; color:#0e2238; margin:0 0 18px; text-wrap:balance;">{{ t.servicesIntro.title }}</h1>
+          <p style="font-size:18px; line-height:1.6; color:#5a6b7e; margin:0;">{{ t.servicesIntro.subtitle }}</p>
+        </div>
+      </section>
+      <section style="max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,48px) clamp(56px,6vw,92px); display:flex; flex-direction:column;">
+        <sc-for list="{{ serviceList }}" as="s" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:0.42fr 0.58fr; gap:clamp(28px,5vw,64px); padding:clamp(34px,4vw,52px) 0; border-top:1px solid rgba(19,40,63,0.14); align-items:start;">
+            <div>
+              <div style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
+                <div style="font-family:'Source Serif 4', serif; font-size:15px; font-weight:600; color:#b18f54;">{{ s.num }}</div>
+                <div style="flex:1; height:1px; background:rgba(19,40,63,0.12);"></div>
+              </div>
+              <h2 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(24px,2.6vw,32px); line-height:1.12; letter-spacing:-0.3px; color:#0e2238; margin:0;">{{ s.name }}</h2>
+            </div>
+            <div>
+              <p style="font-size:17px; line-height:1.65; color:#46566a; margin:0 0 24px;">{{ s.long }}</p>
+              <div style="display:flex; flex-direction:column; gap:13px;">
+                <sc-for list="{{ s.points }}" as="pt" hint-placeholder-count="3">
+                  <div style="display:flex; align-items:flex-start; gap:13px; font-size:15.5px; font-weight:600; color:#28394d;">
+                    <span style="width:7px; height:7px; margin-top:7px; background:#b18f54; transform:rotate(45deg); display:inline-block; flex:none;"></span>{{ pt }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ============ CONTACT ============ -->
+    <sc-if value="{{ isContact }}">
+    <div style="animation:gkFade 0.5s ease both;">
+      <section style="max-width:1240px; margin:0 auto; padding:clamp(44px,5vw,76px) clamp(20px,4vw,48px) clamp(56px,6vw,90px); display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(36px,5vw,72px); align-items:start;">
+        <div>
+          <div style="font-size:12.5px; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; color:#7d6a45; margin-bottom:16px;">{{ t.contact.eyebrow }}</div>
+          <h1 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(32px,4vw,50px); line-height:1.08; letter-spacing:-0.5px; color:#0e2238; margin:0 0 18px; text-wrap:balance;">{{ t.contact.title }}</h1>
+          <p style="font-size:17.5px; line-height:1.6; color:#5a6b7e; margin:0 0 40px; max-width:30em;">{{ t.contact.subtitle }}</p>
+
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#94836a; margin-bottom:14px;">{{ t.contact.detailsTitle }}</div>
+
+            <a href="mailto:{{ contact.email }}" style-hover="border-color:#b18f54" style="display:flex; align-items:center; gap:16px; text-decoration:none; padding:16px 0; border-bottom:1px solid rgba(19,40,63,0.12);">
+              <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#94836a; width:74px; flex:none;">{{ t.contact.emailLabel }}</span>
+              <span style="font-size:16.5px; font-weight:600; color:#0e2238;">{{ contact.email }}</span>
+            </a>
+            <a href="tel:{{ contact.phoneRaw }}" style-hover="border-color:#b18f54" style="display:flex; align-items:center; gap:16px; text-decoration:none; padding:16px 0; border-bottom:1px solid rgba(19,40,63,0.12);">
+              <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#94836a; width:74px; flex:none;">{{ t.contact.phoneLabel }}</span>
+              <span style="font-size:16.5px; font-weight:600; color:#0e2238;">{{ contact.phone }}</span>
+            </a>
+            <div style="display:flex; align-items:flex-start; gap:16px; padding:16px 0; border-bottom:1px solid rgba(19,40,63,0.12);">
+              <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#94836a; width:74px; flex:none; margin-top:2px;">{{ t.contact.officeLabel }}</span>
+              <span style="font-size:16.5px; font-weight:600; color:#0e2238; line-height:1.4;">{{ contact.office }}</span>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:16px; padding:16px 0; border-bottom:1px solid rgba(19,40,63,0.12);">
+              <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#94836a; width:74px; flex:none; margin-top:2px;">{{ t.contact.hoursLabel }}</span>
+              <span style="font-size:15.5px; font-weight:500; color:#33465c; line-height:1.55; white-space:pre-line;">{{ t.contact.hoursValue }}</span>
+            </div>
+            <a href="{{ instaUrl }}" target="_blank" rel="noopener" style-hover="border-color:#b18f54" style="display:flex; align-items:center; gap:16px; text-decoration:none; padding:16px 0;">
+              <span style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#94836a; width:74px; flex:none;">{{ t.contact.followLabel }}</span>
+              <span style="font-size:16.5px; font-weight:600; color:#0e2238;">@gulmetfinance ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid rgba(19,40,63,0.12); box-shadow:0 24px 60px -34px rgba(14,34,56,0.4); padding:clamp(28px,3vw,40px);">
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center; padding:40px 10px;">
+              <div style="width:54px; height:54px; margin:0 auto 22px; border:1px solid #b18f54; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b18f54" stroke-width="1.8"><path d="M5 12.5 L10 17.5 L19 6.5"></path></svg>
+              </div>
+              <p style="font-family:'Source Serif 4', serif; font-size:20px; line-height:1.45; color:#0e2238; margin:0 0 24px; max-width:24em; margin-left:auto; margin-right:auto;">{{ t.contact.form.success }}</p>
+              <button onClick="{{ onReset }}" style="background:none; border:1px solid rgba(19,40,63,0.28); color:#0e2238; cursor:pointer; padding:11px 22px; font-size:14px; font-weight:600; border-radius:2px;">↺</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}" style="display:flex; flex-direction:column; gap:18px;">
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.4px; color:#33465c;">{{ t.contact.form.name }}</span>
+              <input type="text" required style-focus="border-color:#0e2238" style="border:1px solid rgba(19,40,63,0.2); border-radius:2px; padding:12px 14px; font-size:15.5px; color:#0e2238; background:#fbfaf6; outline:none;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.4px; color:#33465c;">{{ t.contact.form.email }}</span>
+              <input type="email" required style-focus="border-color:#0e2238" style="border:1px solid rgba(19,40,63,0.2); border-radius:2px; padding:12px 14px; font-size:15.5px; color:#0e2238; background:#fbfaf6; outline:none;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.4px; color:#33465c;">{{ t.contact.form.phone }}</span>
+              <input type="tel" style-focus="border-color:#0e2238" style="border:1px solid rgba(19,40,63,0.2); border-radius:2px; padding:12px 14px; font-size:15.5px; color:#0e2238; background:#fbfaf6; outline:none;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.4px; color:#33465c;">{{ t.contact.form.topic }}</span>
+              <select style-focus="border-color:#0e2238" style="border:1px solid rgba(19,40,63,0.2); border-radius:2px; padding:12px 14px; font-size:15.5px; color:#0e2238; background:#fbfaf6; outline:none;">
+                <sc-for list="{{ t.contact.form.topicOptions }}" as="opt" hint-placeholder-count="5">
+                  <option>{{ opt }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:7px;">
+              <span style="font-size:12.5px; font-weight:700; letter-spacing:0.4px; color:#33465c;">{{ t.contact.form.message }}</span>
+              <textarea rows="4" style-focus="border-color:#0e2238" style="border:1px solid rgba(19,40,63,0.2); border-radius:2px; padding:12px 14px; font-size:15.5px; color:#0e2238; background:#fbfaf6; outline:none; resize:vertical; font-family:inherit;"></textarea>
+            </label>
+            <button type="submit" style-hover="background:#16314f" style="background:#0e2238; border:1px solid #0e2238; color:#f4f1ea; cursor:pointer; padding:15px 24px; font-size:15.5px; font-weight:600; border-radius:2px; box-shadow:0 1px 0 #b18f54; margin-top:4px;">{{ t.contact.form.submit }}</button>
+          </form>
+          </sc-if>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+  </main>
+
+  <!-- ============ CTA BAND ============ -->
+  <sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#0e2238; color:#f4f1ea; border-top:1px solid #b18f54;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(54px,6vw,80px) clamp(20px,4vw,48px); display:flex; align-items:center; justify-content:space-between; gap:36px; flex-wrap:wrap;">
+      <div style="max-width:30em;">
+        <h2 style="font-family:'Source Serif 4', serif; font-weight:600; font-size:clamp(26px,3vw,38px); line-height:1.14; letter-spacing:-0.3px; margin:0 0 12px;">{{ t.ctaBand.title }}</h2>
+        <p style="font-size:17px; line-height:1.55; color:rgba(244,241,234,0.72); margin:0;">{{ t.ctaBand.subtitle }}</p>
+      </div>
+      <button onClick="{{ goContact }}" style-hover="background:#d8b878" style="background:#c9a86a; border:none; color:#0e2238; cursor:pointer; padding:16px 30px; font-size:15.5px; font-weight:700; border-radius:2px; flex:none;">{{ t.ctaBand.button }}</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#0b1b2e; color:#f4f1ea;">
+    <div style="max-width:1240px; margin:0 auto; padding:clamp(48px,5vw,72px) clamp(20px,4vw,48px) 0;">
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:clamp(28px,4vw,56px); padding-bottom:44px; border-bottom:1px solid rgba(244,241,234,0.12);">
+        <div>
+          <div style="display:flex; align-items:center; gap:13px; margin-bottom:18px;">
+            <div style="width:44px; height:44px; flex:none; background:#0e2238; border:1px solid #b18f54; display:flex; align-items:center; justify-content:center; font-family:'Source Serif 4', serif; font-weight:600; font-size:19px; color:#c9a86a;">GK</div>
+            <div style="font-family:'Source Serif 4', serif; font-size:19px; font-weight:600;">Gulmet Kulmedov</div>
+          </div>
+          <p style="font-size:15.5px; line-height:1.6; color:rgba(244,241,234,0.66); margin:0; max-width:26em;">{{ t.footer.tagline }}</p>
+        </div>
+        <div>
+          <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#c9a86a; margin-bottom:18px;">{{ t.footer.contactTitle }}</div>
+          <div style="display:flex; flex-direction:column; gap:11px; font-size:14.5px; color:rgba(244,241,234,0.78);">
+            <a href="mailto:{{ contact.email }}" style="text-decoration:none;">{{ contact.email }}</a>
+            <a href="tel:{{ contact.phoneRaw }}" style="text-decoration:none;">{{ contact.phone }}</a>
+            <span style="line-height:1.45;">{{ contact.office }}</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11.5px; font-weight:700; letter-spacing:1.3px; text-transform:uppercase; color:#c9a86a; margin-bottom:18px;">{{ t.footer.followTitle }}</div>
+          <a href="{{ instaUrl }}" target="_blank" rel="noopener" style-hover="border-color:#b18f54" style="display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:#f4f1ea; font-size:14.5px; font-weight:600; border:1px solid rgba(244,241,234,0.2); border-radius:2px; padding:10px 15px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+            @gulmetfinance
+          </a>
+        </div>
+      </div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:26px 0 36px;">
+        <p style="font-size:12px; line-height:1.6; color:rgba(244,241,234,0.42); margin:0; max-width:60em;">{{ t.footer.disclaimer }}</p>
+        <div style="font-size:12.5px; color:rgba(244,241,234,0.5); white-space:nowrap;">{{ t.footer.rights }}</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  CONTACT = {
+    email: "gulmet.kulmedov@example.com",
+    phone: "+1 (206) 555-0142",
+    phoneRaw: "+12065550142",
+    office: "1201 Third Avenue, Seattle, WA 98101",
+  };
+
+  LANGS = [
+    { code: "en", flag: "\uD83C\uDDFA\uD83C\uDDF8", native: "English" },
+    { code: "ru", flag: "\uD83C\uDDF7\uD83C\uDDFA", native: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439" },
+    { code: "tr", flag: "\uD83C\uDDF9\uD83C\uDDF7", native: "T\u00Fcrk\u00E7e" },
+    { code: "tk", flag: "\uD83C\uDDF9\uD83C\uDDF2", native: "T\u00Fcrkmen\u00E7e" },
+  ];
+
+  T = {
+    en: {
+      nav: { home: "Home", about: "About", services: "Services", contact: "Contact", cta: "Book a Consultation", role: "Financial Professional" },
+      hero: {
+        eyebrow: "Seattle \u00B7 Financial Professional",
+        title: "Building lasting financial confidence for your family.",
+        subtitle: "I help families, professionals, and business owners protect what matters most and plan for a secure future \u2014 with trusted guidance in your language.",
+        ctaPrimary: "Book a Consultation", ctaSecondary: "Explore Services",
+        langsLabel: "I advise clients in", location: "Based in Seattle, WA",
+      },
+      servicesIntro: { eyebrow: "What I Do", title: "Comprehensive guidance for every stage of life", subtitle: "Four core areas of expertise, tailored to your goals and your family's future." },
+      services: [
+        { name: "Life Insurance", short: "Protect your loved ones with coverage built around your family's needs and budget.", long: "The right life insurance gives your family financial security if the unexpected happens. I help you choose term, whole, or universal coverage that fits your stage of life and budget \u2014 so the people you love are always protected.", points: ["Term, whole & universal life options", "Coverage matched to your budget", "Protection for income, mortgage & education"] },
+        { name: "Long-Term Wealth Planning", short: "A clear, personalized roadmap to grow and preserve your wealth over time.", long: "Wealth doesn't happen by accident \u2014 it's planned. Together we build a long-term strategy that grows your assets, reduces risk, and keeps your goals on track through every market and life change.", points: ["Personalized financial roadmap", "Goal-based saving strategies", "Regular reviews as life evolves"] },
+        { name: "Retirement & Annuities", short: "Create dependable income you won't outlive, so you can retire with confidence.", long: "Retirement should be the reward for a lifetime of work. I help you turn savings into reliable, guaranteed income through annuities and retirement strategies designed to last as long as you do.", points: ["Guaranteed lifetime income options", "Tax-efficient retirement strategies", "Income that lasts a lifetime"] },
+        { name: "Investments & Wealth Management", short: "Strategies aligned with your goals, your comfort with risk, and your time horizon.", long: "Smart investing balances growth with peace of mind. I build and manage a diversified strategy aligned with your goals and risk comfort \u2014 and adjust it as markets and your life change.", points: ["Diversified, goal-aligned portfolios", "Risk managed to your comfort", "Ongoing guidance & rebalancing"] },
+      ],
+      why: {
+        eyebrow: "Why Work With Me", title: "A trusted advisor who speaks your language", subtitle: "More than products \u2014 a partner invested in your family's future.",
+        points: [
+          { title: "Guidance in your language", desc: "English, Russian, Turkish, and Turkmen \u2014 clear advice with no translation barriers." },
+          { title: "A personal, long-term partnership", desc: "I take time to understand your goals and stay with you as life changes." },
+          { title: "Backed by a trusted institution", desc: "As a financial professional with New York Life, I offer proven products and lasting stability." },
+          { title: "Clarity over jargon", desc: "Complex decisions explained simply, so you always feel in control." },
+        ],
+      },
+      about: {
+        eyebrow: "About", title: "Meet Gulmet Kulmedov", role: "Financial Professional \u00B7 Seattle",
+        lead: "A Seattle\u2013based financial professional helping families, professionals, and business owners build security and lasting wealth \u2014 in the language they're most comfortable speaking.",
+        body1: "For me, financial planning is personal. Having served a diverse, multilingual community, I understand that real guidance starts with truly listening \u2014 to your goals, your worries, and the future you want for your family.",
+        body2: "As a financial professional with New York Life, I combine the strength and stability of a trusted institution with a hands-on, relationship-first approach. Whether you're protecting your family, planning for retirement, or growing your wealth, I'm here for the long term.",
+        focusTitle: "Areas of focus", langTitle: "Languages I speak", valuesTitle: "What I value",
+        values: ["Trust earned over time", "Honest, jargon-free advice", "Your family's future, first"],
+      },
+      contact: {
+        eyebrow: "Contact", title: "Let's plan your future together", subtitle: "Reach out for a complimentary, no-pressure consultation. I'll respond within one business day.",
+        detailsTitle: "Get in touch", emailLabel: "Email", phoneLabel: "Phone", officeLabel: "Office", hoursLabel: "Hours", hoursValue: "Mon\u2013Fri \u00B7 9:00\u201318:00 ET\nEvenings & weekends by appointment", followLabel: "Follow",
+        form: { name: "Full name", email: "Email address", phone: "Phone (optional)", topic: "What can I help with?", topicOptions: ["Life Insurance", "Wealth Planning", "Retirement & Annuities", "Investments", "Something else"], message: "Your message", submit: "Request Consultation", success: "Thank you \u2014 your request has been received. I'll be in touch within one business day." },
+      },
+      ctaBand: { title: "Ready to take the next step?", subtitle: "Schedule a free, no-obligation consultation today.", button: "Book a Consultation" },
+      footer: { tagline: "Financial guidance for families and businesses \u2014 in your language.", contactTitle: "Contact", followTitle: "Follow", rights: "\u00A9 2026 Gulmet Kulmedov. All rights reserved.", disclaimer: "Gulmet Kulmedov is a financial professional based in Seattle. This website is for informational purposes only and does not constitute financial, tax, or legal advice. Contact details shown are placeholders." },
+    },
+
+    ru: {
+      nav: { home: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F", about: "\u041E\u0431\u043E \u043C\u043D\u0435", services: "\u0423\u0441\u043B\u0443\u0433\u0438", contact: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B", cta: "\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C\u0441\u044F", role: "\u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442" },
+      hero: {
+        eyebrow: "\u0421\u0438\u044D\u0442\u043B \u00B7 \u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442",
+        title: "\u0423\u0432\u0435\u0440\u0435\u043D\u043D\u043E\u0441\u0442\u044C \u0432 \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u043E\u043C \u0431\u0443\u0434\u0443\u0449\u0435\u043C \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438.",
+        subtitle: "\u041F\u043E\u043C\u043E\u0433\u0430\u044E \u0441\u0435\u043C\u044C\u044F\u043C, \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0441\u0442\u0430\u043C \u0438 \u0432\u043B\u0430\u0434\u0435\u043B\u044C\u0446\u0430\u043C \u0431\u0438\u0437\u043D\u0435\u0441\u0430 \u0437\u0430\u0449\u0438\u0442\u0438\u0442\u044C \u0441\u0430\u043C\u043E\u0435 \u0432\u0430\u0436\u043D\u043E\u0435 \u0438 \u0441\u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0430\u0434\u0451\u0436\u043D\u043E\u0435 \u0431\u0443\u0434\u0443\u0449\u0435\u0435 \u2014 \u043D\u0430 \u0432\u0430\u0448\u0435\u043C \u0440\u043E\u0434\u043D\u043E\u043C \u044F\u0437\u044B\u043A\u0435.",
+        ctaPrimary: "\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C\u0441\u044F \u043D\u0430 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u044E", ctaSecondary: "\u041D\u0430\u0448\u0438 \u0443\u0441\u043B\u0443\u0433\u0438",
+        langsLabel: "\u041A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0438\u0440\u0443\u044E \u043D\u0430 \u044F\u0437\u044B\u043A\u0430\u0445", location: "\u0421\u0438\u044D\u0442\u043B, \u0421\u0428\u0410",
+      },
+      servicesIntro: { eyebrow: "\u0427\u0435\u043C \u044F \u0437\u0430\u043D\u0438\u043C\u0430\u044E\u0441\u044C", title: "\u041A\u043E\u043C\u043F\u043B\u0435\u043A\u0441\u043D\u043E\u0435 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u043D\u0430 \u043A\u0430\u0436\u0434\u043E\u043C \u044D\u0442\u0430\u043F\u0435 \u0436\u0438\u0437\u043D\u0438", subtitle: "\u0427\u0435\u0442\u044B\u0440\u0435 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u044D\u043A\u0441\u043F\u0435\u0440\u0442\u0438\u0437\u044B \u043F\u043E\u0434 \u0432\u0430\u0448\u0438 \u0446\u0435\u043B\u0438 \u0438 \u0431\u0443\u0434\u0443\u0449\u0435\u0435 \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438." },
+      services: [
+        { name: "\u0421\u0442\u0440\u0430\u0445\u043E\u0432\u0430\u043D\u0438\u0435 \u0436\u0438\u0437\u043D\u0438", short: "\u0417\u0430\u0449\u0438\u0442\u0438\u0442\u0435 \u0431\u043B\u0438\u0437\u043A\u0438\u0445 \u0441 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043E\u0439, \u043F\u043E\u0434\u043E\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u043F\u043E\u0434 \u043D\u0443\u0436\u0434\u044B \u0438 \u0431\u044E\u0434\u0436\u0435\u0442 \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438.", long: "\u041F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0435 \u0441\u0442\u0440\u0430\u0445\u043E\u0432\u0430\u043D\u0438\u0435 \u0436\u0438\u0437\u043D\u0438 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0438\u0432\u0430\u0435\u0442 \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u0443\u044E \u0437\u0430\u0449\u0438\u0442\u0443 \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438 \u0432 \u043D\u0435\u043F\u0440\u0435\u0434\u0432\u0438\u0434\u0435\u043D\u043D\u044B\u0445 \u0441\u0438\u0442\u0443\u0430\u0446\u0438\u044F\u0445. \u042F \u043F\u043E\u043C\u043E\u0433\u0443 \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0441\u0440\u043E\u0447\u043D\u0443\u044E, \u043F\u043E\u0436\u0438\u0437\u043D\u0435\u043D\u043D\u0443\u044E \u0438\u043B\u0438 \u0443\u043D\u0438\u0432\u0435\u0440\u0441\u0430\u043B\u044C\u043D\u0443\u044E \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, \u043F\u043E\u0434\u0445\u043E\u0434\u044F\u0449\u0443\u044E \u0432\u0430\u0448\u0435\u043C\u0443 \u044D\u0442\u0430\u043F\u0443 \u0436\u0438\u0437\u043D\u0438 \u0438 \u0431\u044E\u0434\u0436\u0435\u0442\u0443.", points: ["\u0421\u0440\u043E\u0447\u043D\u043E\u0435, \u043F\u043E\u0436\u0438\u0437\u043D\u0435\u043D\u043D\u043E\u0435 \u0438 \u0443\u043D\u0438\u0432\u0435\u0440\u0441\u0430\u043B\u044C\u043D\u043E\u0435", "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043F\u043E\u0434 \u0432\u0430\u0448 \u0431\u044E\u0434\u0436\u0435\u0442", "\u0417\u0430\u0449\u0438\u0442\u0430 \u0434\u043E\u0445\u043E\u0434\u0430, \u0438\u043F\u043E\u0442\u0435\u043A\u0438 \u0438 \u043E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u044F"] },
+        { name: "\u0414\u043E\u043B\u0433\u043E\u0441\u0440\u043E\u0447\u043D\u043E\u0435 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435", short: "\u0427\u0451\u0442\u043A\u0438\u0439 \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u043B\u0430\u043D \u0434\u043B\u044F \u0440\u043E\u0441\u0442\u0430 \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0432\u0430\u0448\u0435\u0433\u043E \u043A\u0430\u043F\u0438\u0442\u0430\u043B\u0430.", long: "\u0411\u043B\u0430\u0433\u043E\u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u043D\u0435 \u0432\u043E\u0437\u043D\u0438\u043A\u0430\u0435\u0442 \u0441\u043B\u0443\u0447\u0430\u0439\u043D\u043E \u2014 \u0435\u0433\u043E \u043F\u043B\u0430\u043D\u0438\u0440\u0443\u044E\u0442. \u0412\u043C\u0435\u0441\u0442\u0435 \u043C\u044B \u043F\u043E\u0441\u0442\u0440\u043E\u0438\u043C \u0434\u043E\u043B\u0433\u043E\u0441\u0440\u043E\u0447\u043D\u0443\u044E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044E, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u043F\u0440\u0438\u0443\u043C\u043D\u043E\u0436\u0430\u0435\u0442 \u0430\u043A\u0442\u0438\u0432\u044B, \u0441\u043D\u0438\u0436\u0430\u0435\u0442 \u0440\u0438\u0441\u043A\u0438 \u0438 \u0443\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u0442 \u0432\u0430\u0448\u0438 \u0446\u0435\u043B\u0438 \u043D\u0430 \u043A\u0443\u0440\u0441\u0435.", points: ["\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F", "\u041D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F \u043F\u043E\u0434 \u0446\u0435\u043B\u0438", "\u0420\u0435\u0433\u0443\u043B\u044F\u0440\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0441\u043C\u043E\u0442\u0440 \u043F\u043B\u0430\u043D\u0430"] },
+        { name: "\u041F\u0435\u043D\u0441\u0438\u044F \u0438 \u0430\u043D\u043D\u0443\u0438\u0442\u0435\u0442\u044B", short: "\u0421\u043E\u0437\u0434\u0430\u0439\u0442\u0435 \u043D\u0430\u0434\u0451\u0436\u043D\u044B\u0439 \u0434\u043E\u0445\u043E\u0434 \u043D\u0430 \u0432\u0441\u044E \u0436\u0438\u0437\u043D\u044C \u0438 \u0432\u044B\u0445\u043E\u0434\u0438\u0442\u0435 \u043D\u0430 \u043F\u0435\u043D\u0441\u0438\u044E \u0443\u0432\u0435\u0440\u0435\u043D\u043D\u043E.", long: "\u041F\u0435\u043D\u0441\u0438\u044F \u0434\u043E\u043B\u0436\u043D\u0430 \u0431\u044B\u0442\u044C \u043D\u0430\u0433\u0440\u0430\u0434\u043E\u0439 \u0437\u0430 \u0433\u043E\u0434\u044B \u0442\u0440\u0443\u0434\u0430. \u042F \u043F\u043E\u043C\u043E\u0433\u0443 \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u0442\u044C \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F \u0432 \u043D\u0430\u0434\u0451\u0436\u043D\u044B\u0439 \u0433\u0430\u0440\u0430\u043D\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u0434\u043E\u0445\u043E\u0434 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E \u0430\u043D\u043D\u0443\u0438\u0442\u0435\u0442\u043E\u0432 \u0438 \u043F\u0435\u043D\u0441\u0438\u043E\u043D\u043D\u044B\u0445 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0439.", points: ["\u0413\u0430\u0440\u0430\u043D\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u043F\u043E\u0436\u0438\u0437\u043D\u0435\u043D\u043D\u044B\u0439 \u0434\u043E\u0445\u043E\u0434", "\u041D\u0430\u043B\u043E\u0433\u043E\u0432\u043E-\u044D\u0444\u0444\u0435\u043A\u0442\u0438\u0432\u043D\u044B\u0435 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438", "\u0414\u043E\u0445\u043E\u0434 \u043D\u0430 \u0432\u0441\u044E \u0436\u0438\u0437\u043D\u044C"] },
+        { name: "\u0418\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0438 \u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043A\u0430\u043F\u0438\u0442\u0430\u043B\u043E\u043C", short: "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0438, \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0438\u0435 \u0432\u0430\u0448\u0438\u043C \u0446\u0435\u043B\u044F\u043C, \u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u044E \u043A \u0440\u0438\u0441\u043A\u0443 \u0438 \u0433\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0443 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F.", long: "\u0420\u0430\u0437\u0443\u043C\u043D\u044B\u0435 \u0438\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0438 \u0441\u043E\u0447\u0435\u0442\u0430\u044E\u0442 \u0440\u043E\u0441\u0442 \u0438 \u0441\u043F\u043E\u043A\u043E\u0439\u0441\u0442\u0432\u0438\u0435. \u042F \u0441\u043E\u0437\u0434\u0430\u044E \u0438 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0430\u044E \u0434\u0438\u0432\u0435\u0440\u0441\u0438\u0444\u0438\u0446\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0443\u044E \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044E, \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0443\u044E \u0432\u0430\u0448\u0438\u043C \u0446\u0435\u043B\u044F\u043C \u0438 \u0434\u043E\u043F\u0443\u0441\u0442\u0438\u043C\u043E\u043C\u0443 \u0440\u0438\u0441\u043A\u0443.", points: ["\u0414\u0438\u0432\u0435\u0440\u0441\u0438\u0444\u0438\u0446\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u043F\u043E\u0440\u0442\u0444\u0435\u043B\u044C", "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0440\u0438\u0441\u043A\u043E\u043C", "\u0421\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u0438 \u0440\u0435\u0431\u0430\u043B\u0430\u043D\u0441\u0438\u0440\u043E\u0432\u043A\u0430"] },
+      ],
+      why: {
+        eyebrow: "\u041F\u043E\u0447\u0435\u043C\u0443 \u044F", title: "\u041D\u0430\u0434\u0451\u0436\u043D\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0433\u043E\u0432\u043E\u0440\u0438\u0442 \u043D\u0430 \u0432\u0430\u0448\u0435\u043C \u044F\u0437\u044B\u043A\u0435", subtitle: "\u0411\u043E\u043B\u044C\u0448\u0435, \u0447\u0435\u043C \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u044B \u2014 \u043F\u0430\u0440\u0442\u043D\u0451\u0440, \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u0432 \u0431\u0443\u0434\u0443\u0449\u0435\u043C \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438.",
+        points: [
+          { title: "\u041A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u0438 \u043D\u0430 \u0432\u0430\u0448\u0435\u043C \u044F\u0437\u044B\u043A\u0435", desc: "\u0410\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0439, \u0440\u0443\u0441\u0441\u043A\u0438\u0439, \u0442\u0443\u0440\u0435\u0446\u043A\u0438\u0439 \u0438 \u0442\u0443\u0440\u043A\u043C\u0435\u043D\u0441\u043A\u0438\u0439 \u2014 \u043F\u043E\u043D\u044F\u0442\u043D\u044B\u0435 \u0441\u043E\u0432\u0435\u0442\u044B \u0431\u0435\u0437 \u044F\u0437\u044B\u043A\u043E\u0432\u044B\u0445 \u0431\u0430\u0440\u044C\u0435\u0440\u043E\u0432." },
+          { title: "\u041B\u0438\u0447\u043D\u043E\u0435 \u0434\u043E\u043B\u0433\u043E\u0441\u0440\u043E\u0447\u043D\u043E\u0435 \u043F\u0430\u0440\u0442\u043D\u0451\u0440\u0441\u0442\u0432\u043E", desc: "\u042F \u0432\u043D\u0438\u043A\u0430\u044E \u0432 \u0432\u0430\u0448\u0438 \u0446\u0435\u043B\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0430\u044E \u0432\u0430\u0441 \u043F\u043E \u043C\u0435\u0440\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439 \u0432 \u0436\u0438\u0437\u043D\u0438." },
+          { title: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 \u043D\u0430\u0434\u0451\u0436\u043D\u043E\u0433\u043E \u0438\u043D\u0441\u0442\u0438\u0442\u0443\u0442\u0430", desc: "\u041A\u0430\u043A \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442 New York Life, \u044F \u043F\u0440\u0435\u0434\u043B\u0430\u0433\u0430\u044E \u043F\u0440\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u044B\u0435 \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u044B \u0438 \u0441\u0442\u0430\u0431\u0438\u043B\u044C\u043D\u043E\u0441\u0442\u044C." },
+          { title: "\u042F\u0441\u043D\u043E\u0441\u0442\u044C \u0432\u043C\u0435\u0441\u0442\u043E \u0436\u0430\u0440\u0433\u043E\u043D\u0430", desc: "\u0421\u043B\u043E\u0436\u043D\u044B\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043E\u0431\u044A\u044F\u0441\u043D\u044F\u044E \u043F\u0440\u043E\u0441\u0442\u044B\u043C\u0438 \u0441\u043B\u043E\u0432\u0430\u043C\u0438 \u2014 \u0432\u044B \u0432\u0441\u0435\u0433\u0434\u0430 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0435\u0442\u0435 \u0441\u0438\u0442\u0443\u0430\u0446\u0438\u044E." },
+        ],
+      },
+      about: {
+        eyebrow: "\u041E\u0431\u043E \u043C\u043D\u0435", title: "Gulmet Kulmedov", role: "\u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442 \u00B7 \u0421\u0438\u044D\u0442\u043B",
+        lead: "\u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442 \u0438\u0437 \u0421\u0438\u044D\u0442\u043B\u0430, \u043F\u043E\u043C\u043E\u0433\u0430\u044E\u0449\u0438\u0439 \u0441\u0435\u043C\u044C\u044F\u043C, \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0441\u0442\u0430\u043C \u0438 \u0432\u043B\u0430\u0434\u0435\u043B\u044C\u0446\u0430\u043C \u0431\u0438\u0437\u043D\u0435\u0441\u0430 \u0441\u043E\u0437\u0434\u0430\u0432\u0430\u0442\u044C \u0437\u0430\u0449\u0438\u0442\u0443 \u0438 \u0434\u043E\u043B\u0433\u043E\u0441\u0440\u043E\u0447\u043D\u043E\u0435 \u0431\u043B\u0430\u0433\u043E\u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u2014 \u043D\u0430 \u0443\u0434\u043E\u0431\u043D\u043E\u043C \u0434\u043B\u044F \u043D\u0438\u0445 \u044F\u0437\u044B\u043A\u0435.",
+        body1: "\u0414\u043B\u044F \u043C\u0435\u043D\u044F \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u043E\u0435 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u2014 \u044D\u0442\u043E \u043B\u0438\u0447\u043D\u043E\u0435. \u0420\u0430\u0431\u043E\u0442\u0430\u044F \u0441 \u043C\u043D\u043E\u0433\u043E\u044F\u0437\u044B\u0447\u043D\u044B\u043C \u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432\u043E\u043C, \u044F \u043F\u043E\u043D\u0438\u043C\u0430\u044E, \u0447\u0442\u043E \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0430\u044F \u043F\u043E\u043C\u043E\u0449\u044C \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441 \u0443\u043C\u0435\u043D\u0438\u044F \u0441\u043B\u0443\u0448\u0430\u0442\u044C \u2014 \u0432\u0430\u0448\u0438 \u0446\u0435\u043B\u0438, \u0442\u0440\u0435\u0432\u043E\u0433\u0438 \u0438 \u0431\u0443\u0434\u0443\u0449\u0435\u0435, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0434\u043B\u044F \u0441\u0432\u043E\u0435\u0439 \u0441\u0435\u043C\u044C\u0438.",
+        body2: "\u041A\u0430\u043A \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442 New York Life, \u044F \u0441\u043E\u0447\u0435\u0442\u0430\u044E \u043D\u0430\u0434\u0451\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u043E\u0433\u043E \u0438\u043D\u0441\u0442\u0438\u0442\u0443\u0442\u0430 \u0441 \u043B\u0438\u0447\u043D\u044B\u043C \u043F\u043E\u0434\u0445\u043E\u0434\u043E\u043C, \u0433\u0434\u0435 \u043D\u0430 \u043F\u0435\u0440\u0432\u043E\u043C \u043C\u0435\u0441\u0442\u0435 \u2014 \u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u044F. \u0417\u0430\u0449\u0438\u0442\u0430 \u0441\u0435\u043C\u044C\u0438, \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u043A \u043F\u0435\u043D\u0441\u0438\u0438 \u0438\u043B\u0438 \u0440\u043E\u0441\u0442 \u043A\u0430\u043F\u0438\u0442\u0430\u043B\u0430 \u2014 \u044F \u0440\u044F\u0434\u043E\u043C \u043D\u0430\u0434\u043E\u043B\u0433\u043E.",
+        focusTitle: "\u041D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0440\u0430\u0431\u043E\u0442\u044B", langTitle: "\u042F\u0437\u044B\u043A\u0438", valuesTitle: "\u041C\u043E\u0438 \u0446\u0435\u043D\u043D\u043E\u0441\u0442\u0438",
+        values: ["\u0414\u043E\u0432\u0435\u0440\u0438\u0435, \u0437\u0430\u0441\u043B\u0443\u0436\u0435\u043D\u043D\u043E\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0435\u043C", "\u0427\u0435\u0441\u0442\u043D\u044B\u0435 \u0441\u043E\u0432\u0435\u0442\u044B \u0431\u0435\u0437 \u0436\u0430\u0440\u0433\u043E\u043D\u0430", "\u0411\u0443\u0434\u0443\u0449\u0435\u0435 \u0432\u0430\u0448\u0435\u0439 \u0441\u0435\u043C\u044C\u0438 \u2014 \u043F\u0440\u0435\u0436\u0434\u0435 \u0432\u0441\u0435\u0433\u043E"],
+      },
+      contact: {
+        eyebrow: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B", title: "\u0421\u043F\u043B\u0430\u043D\u0438\u0440\u0443\u0435\u043C \u0432\u0430\u0448\u0435 \u0431\u0443\u0434\u0443\u0449\u0435\u0435 \u0432\u043C\u0435\u0441\u0442\u0435", subtitle: "\u0417\u0430\u043F\u0438\u0448\u0438\u0442\u0435\u0441\u044C \u043D\u0430 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u0443\u044E \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u044E \u0431\u0435\u0437 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432. \u042F \u043E\u0442\u0432\u0435\u0447\u0443 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0434\u043D\u043E\u0433\u043E \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u0434\u043D\u044F.",
+        detailsTitle: "\u0421\u0432\u044F\u0437\u0430\u0442\u044C\u0441\u044F", emailLabel: "\u041F\u043E\u0447\u0442\u0430", phoneLabel: "\u0422\u0435\u043B\u0435\u0444\u043E\u043D", officeLabel: "\u041E\u0444\u0438\u0441", hoursLabel: "\u0427\u0430\u0441\u044B", hoursValue: "\u041F\u043D\u2013\u041F\u0442 \u00B7 9:00\u201318:00 ET\n\u0412\u0435\u0447\u0435\u0440\u0430 \u0438 \u0432\u044B\u0445\u043E\u0434\u043D\u044B\u0435 \u2014 \u043F\u043E \u0437\u0430\u043F\u0438\u0441\u0438", followLabel: "\u0421\u043E\u0446\u0441\u0435\u0442\u0438",
+        form: { name: "\u0418\u043C\u044F \u0438 \u0444\u0430\u043C\u0438\u043B\u0438\u044F", email: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043D\u043D\u0430\u044F \u043F\u043E\u0447\u0442\u0430", phone: "\u0422\u0435\u043B\u0435\u0444\u043E\u043D (\u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E)", topic: "\u0421 \u0447\u0435\u043C \u043F\u043E\u043C\u043E\u0447\u044C?", topicOptions: ["\u0421\u0442\u0440\u0430\u0445\u043E\u0432\u0430\u043D\u0438\u0435 \u0436\u0438\u0437\u043D\u0438", "\u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u043E\u0435 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435", "\u041F\u0435\u043D\u0441\u0438\u044F \u0438 \u0430\u043D\u043D\u0443\u0438\u0442\u0435\u0442\u044B", "\u0418\u043D\u0432\u0435\u0441\u0442\u0438\u0446\u0438\u0438", "\u0414\u0440\u0443\u0433\u043E\u0435"], message: "\u0412\u0430\u0448\u0435 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435", submit: "\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C\u0441\u044F \u043D\u0430 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u044E", success: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u2014 \u0432\u0430\u0448\u0430 \u0437\u0430\u044F\u0432\u043A\u0430 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0430. \u042F \u0441\u0432\u044F\u0436\u0443\u0441\u044C \u0441 \u0432\u0430\u043C\u0438 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0434\u043D\u043E\u0433\u043E \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u0434\u043D\u044F." },
+      },
+      ctaBand: { title: "\u0413\u043E\u0442\u043E\u0432\u044B \u0441\u0434\u0435\u043B\u0430\u0442\u044C \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0448\u0430\u0433?", subtitle: "\u0417\u0430\u043F\u0438\u0448\u0438\u0442\u0435\u0441\u044C \u043D\u0430 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u0443\u044E \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u044E \u0431\u0435\u0437 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432 \u0443\u0436\u0435 \u0441\u0435\u0433\u043E\u0434\u043D\u044F.", button: "\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C\u0441\u044F" },
+      footer: { tagline: "\u0424\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u043E\u0435 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435 \u0441\u0435\u043C\u0435\u0439 \u0438 \u0431\u0438\u0437\u043D\u0435\u0441\u0430 \u2014 \u043D\u0430 \u0432\u0430\u0448\u0435\u043C \u044F\u0437\u044B\u043A\u0435.", contactTitle: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B", followTitle: "\u0421\u043E\u0446\u0441\u0435\u0442\u0438", rights: "\u00A9 2026 Gulmet Kulmedov. \u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B.", disclaimer: "\u0413\u0443\u043B\u043C\u0435\u0442 \u041A\u0443\u043B\u043C\u0435\u0434\u043E\u0432 \u2014 \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u043D\u0442 \u0438\u0437 \u0421\u0438\u044D\u0442\u043B\u0430. \u0421\u0430\u0439\u0442 \u043D\u043E\u0441\u0438\u0442 \u0438\u0441\u043A\u043B\u044E\u0447\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u043E\u043D\u043D\u044B\u0439 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440 \u0438 \u043D\u0435 \u044F\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0444\u0438\u043D\u0430\u043D\u0441\u043E\u0432\u043E\u0439, \u043D\u0430\u043B\u043E\u0433\u043E\u0432\u043E\u0439 \u0438\u043B\u0438 \u044E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u043A\u043E\u043D\u0441\u0443\u043B\u044C\u0442\u0430\u0446\u0438\u0435\u0439. \u041A\u043E\u043D\u0442\u0430\u043A\u0442\u043D\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435 \u0443\u043A\u0430\u0437\u0430\u043D\u044B \u0434\u043B\u044F \u043F\u0440\u0438\u043C\u0435\u0440\u0430." },
+    },
+
+    tr: {
+      nav: { home: "Ana Sayfa", about: "Hakk\u0131mda", services: "Hizmetler", contact: "\u0130leti\u015Fim", cta: "Randevu Al\u0131n", role: "Finansal Dan\u0131\u015Fman" },
+      hero: {
+        eyebrow: "Seattle \u00B7 Finansal Dan\u0131\u015Fman",
+        title: "Aileniz i\u00E7in kal\u0131c\u0131 finansal g\u00FCven in\u015Fa ediyorum.",
+        subtitle: "Ailelere, profesyonellere ve i\u015Fletme sahiplerine en de\u011Ferli varl\u0131klar\u0131n\u0131 korumalar\u0131 ve g\u00FCvenli bir gelecek planlamalar\u0131 i\u00E7in kendi dilinizde rehberlik ediyorum.",
+        ctaPrimary: "Dan\u0131\u015Fmanl\u0131k Randevusu Al\u0131n", ctaSecondary: "Hizmetleri Ke\u015Ffedin",
+        langsLabel: "Dan\u0131\u015Fmanl\u0131k verdi\u011Fim diller", location: "Seattle, ABD",
+      },
+      servicesIntro: { eyebrow: "Ne Yap\u0131yorum", title: "Hayat\u0131n her a\u015Famas\u0131 i\u00E7in kapsaml\u0131 rehberlik", subtitle: "Hedeflerinize ve ailenizin gelece\u011Fine g\u00F6re uyarlanm\u0131\u015F d\u00F6rt uzmanl\u0131k alan\u0131." },
+      services: [
+        { name: "Hayat Sigortas\u0131", short: "Sevdiklerinizi, ailenizin ihtiya\u00E7 ve b\u00FCt\u00E7esine g\u00F6re tasarlanm\u0131\u015F teminatla koruyun.", long: "Do\u011Fru hayat sigortas\u0131, beklenmedik durumlarda ailenize finansal g\u00FCvence sa\u011Flar. Ya\u015Fam evrenize ve b\u00FCt\u00E7enize uygun s\u00FCreli, \u00F6m\u00FCr boyu veya \u00FCniversal poli\u00E7e se\u00E7menize yard\u0131mc\u0131 olurum \u2014 sevdikleriniz her zaman korunsun.", points: ["S\u00FCreli, \u00F6m\u00FCr boyu ve \u00FCniversal se\u00E7enekler", "B\u00FCt\u00E7enize uygun teminat", "Gelir, konut kredisi ve e\u011Fitim korumas\u0131"] },
+        { name: "Uzun Vadeli Servet Planlamas\u0131", short: "Servetinizi zaman i\u00E7inde b\u00FCy\u00FCtmek ve korumak i\u00E7in net, ki\u015Fiselle\u015Ftirilmi\u015F bir yol haritas\u0131.", long: "Servet tesad\u00FCfen olu\u015Fmaz \u2014 planlan\u0131r. Birlikte varl\u0131klar\u0131n\u0131z\u0131 b\u00FCy\u00FCten, riski azaltan ve her piyasa ve ya\u015Fam de\u011Fi\u015Fiminde hedeflerinizi koruyan uzun vadeli bir strateji olu\u015Ftururuz.", points: ["Ki\u015Fiye \u00F6zel finansal yol haritas\u0131", "Hedef odakl\u0131 tasarruf stratejileri", "D\u00FCzenli g\u00F6zden ge\u00E7irmeler"] },
+        { name: "Emeklilik ve An\u00FCiteler", short: "\u00D6m\u00FCr boyu t\u00FCkenmeyecek g\u00FCvenilir bir gelir olu\u015Fturarak g\u00FCvenle emekli olun.", long: "Emeklilik, bir \u00F6m\u00FCr boyu \u00E7al\u0131\u015Fman\u0131n \u00F6d\u00FCl\u00FC olmal\u0131. Birikimlerinizi, \u00F6mr\u00FCn\u00FCz boyunca s\u00FCrecek \u015Fekilde tasarlanm\u0131\u015F an\u00FCiteler ve emeklilik stratejileriyle g\u00FCvenilir, garantili gelire d\u00F6n\u00FC\u015Ft\u00FCrmenize yard\u0131mc\u0131 olurum.", points: ["\u00D6m\u00FCr boyu garantili gelir se\u00E7enekleri", "Vergi a\u00E7\u0131s\u0131ndan verimli stratejiler", "\u00D6m\u00FCr boyu s\u00FCren gelir"] },
+        { name: "Yat\u0131r\u0131m ve Servet Y\u00F6netimi", short: "Hedeflerinize, risk konforunuza ve zaman ufkunuza uygun stratejiler.", long: "Ak\u0131ll\u0131 yat\u0131r\u0131m, b\u00FCy\u00FCme ile huzuru dengeler. Hedeflerinize ve risk konforunuza uygun \u00E7e\u015Fitlendirilmi\u015F bir strateji olu\u015Fturur, y\u00F6netir ve piyasa ile hayat\u0131n\u0131z de\u011Fi\u015Ftik\u00E7e g\u00FCncellerim.", points: ["\u00C7e\u015Fitlendirilmi\u015F, hedefe uygun portf\u00F6yler", "Konforunuza g\u00F6re risk y\u00F6netimi", "S\u00FCrekli rehberlik ve yeniden dengeleme"] },
+      ],
+      why: {
+        eyebrow: "Neden Ben", title: "Sizin dilinizi konu\u015Fan g\u00FCvenilir bir dan\u0131\u015Fman", subtitle: "\u00DCr\u00FCnden fazlas\u0131 \u2014 ailenizin gelece\u011Fine yat\u0131r\u0131m yapan bir ortak.",
+        points: [
+          { title: "Kendi dilinizde rehberlik", desc: "\u0130ngilizce, Rus\u00E7a, T\u00FCrk\u00E7e ve T\u00FCrkmence \u2014 dil engeli olmadan net tavsiye." },
+          { title: "Ki\u015Fisel, uzun vadeli ortakl\u0131k", desc: "Hedeflerinizi anlamak i\u00E7in zaman ay\u0131r\u0131r, hayat\u0131n\u0131z de\u011Fi\u015Ftik\u00E7e yan\u0131n\u0131zda olurum." },
+          { title: "G\u00FCvenilir bir kurumun deste\u011Fi", desc: "New York Life finansal dan\u0131\u015Fman\u0131 olarak kan\u0131tlanm\u0131\u015F \u00FCr\u00FCnler ve istikrar sunar\u0131m." },
+          { title: "Jargon yerine netlik", desc: "Karma\u015F\u0131k kararlar\u0131 basit\u00E7e a\u00E7\u0131klar\u0131m, b\u00F6ylece kontrol her zaman sizde olur." },
+        ],
+      },
+      about: {
+        eyebrow: "Hakk\u0131mda", title: "Gulmet Kulmedov", role: "Finansal Dan\u0131\u015Fman \u00B7 Seattle",
+        lead: "Ailelere, profesyonellere ve i\u015Fletme sahiplerine en rahat konu\u015Ftuklar\u0131 dilde g\u00FCvence ve kal\u0131c\u0131 servet olu\u015Fturmalar\u0131 i\u00E7in yard\u0131mc\u0131 olan, Seattle merkezli bir finansal dan\u0131\u015Fman.",
+        body1: "Benim i\u00E7in finansal planlama ki\u015Fiseldir. \u00C7ok dilli bir toplulukla \u00E7al\u0131\u015Farak, ger\u00E7ek rehberli\u011Fin dinlemekle ba\u015Flad\u0131\u011F\u0131n\u0131 \u00F6\u011Frendim \u2014 hedeflerinizi, endi\u015Felerinizi ve aileniz i\u00E7in istedi\u011Finiz gelece\u011Fi.",
+        body2: "New York Life finansal dan\u0131\u015Fman\u0131 olarak, g\u00FCvenilir bir kurumun g\u00FCc\u00FCn\u00FC, ili\u015Fkiyi \u00F6nceleyen ki\u015Fisel bir yakla\u015F\u0131mla birle\u015Ftiriyorum. \u0130ster ailenizi koruyun, ister emeklili\u011Fe haz\u0131rlan\u0131n, ister servetinizi b\u00FCy\u00FCt\u00FCn \u2014 uzun vadede yan\u0131n\u0131zday\u0131m.",
+        focusTitle: "Uzmanl\u0131k alanlar\u0131", langTitle: "Konu\u015Ftu\u011Fum diller", valuesTitle: "De\u011Fer verdiklerim",
+        values: ["Zamanla kazan\u0131lan g\u00FCven", "D\u00FCr\u00FCst, jargonsuz tavsiye", "\u00D6nce ailenizin gelece\u011Fi"],
+      },
+      contact: {
+        eyebrow: "\u0130leti\u015Fim", title: "Gelece\u011Finizi birlikte planlayal\u0131m", subtitle: "\u00DCcretsiz, bask\u0131s\u0131z bir g\u00F6r\u00FC\u015Fme i\u00E7in bana ula\u015F\u0131n. Bir i\u015F g\u00FCn\u00FC i\u00E7inde yan\u0131t veririm.",
+        detailsTitle: "\u0130leti\u015Fime ge\u00E7in", emailLabel: "E-posta", phoneLabel: "Telefon", officeLabel: "Ofis", hoursLabel: "Saatler", hoursValue: "Pzt\u2013Cum \u00B7 9:00\u201318:00 ET\nAk\u015Famlar ve hafta sonu randevuyla", followLabel: "Takip",
+        form: { name: "Ad soyad", email: "E-posta adresi", phone: "Telefon (iste\u011Fe ba\u011Fl\u0131)", topic: "Nas\u0131l yard\u0131mc\u0131 olabilirim?", topicOptions: ["Hayat Sigortas\u0131", "Servet Planlamas\u0131", "Emeklilik ve An\u00FCiteler", "Yat\u0131r\u0131mlar", "Di\u011Fer"], message: "Mesaj\u0131n\u0131z", submit: "Dan\u0131\u015Fmanl\u0131k Talep Et", success: "Te\u015Fekk\u00FCrler \u2014 talebiniz al\u0131nd\u0131. Bir i\u015F g\u00FCn\u00FC i\u00E7inde sizinle ileti\u015Fime ge\u00E7ece\u011Fim." },
+      },
+      ctaBand: { title: "Bir sonraki ad\u0131m\u0131 atmaya haz\u0131r m\u0131s\u0131n\u0131z?", subtitle: "Bug\u00FCn \u00FCcretsiz, y\u00FCk\u00FCml\u00FCl\u00FCks\u00FCz bir g\u00F6r\u00FC\u015Fme planlay\u0131n.", button: "Randevu Al\u0131n" },
+      footer: { tagline: "Aileler ve i\u015Fletmeler i\u00E7in finansal rehberlik \u2014 kendi dilinizde.", contactTitle: "\u0130leti\u015Fim", followTitle: "Takip", rights: "\u00A9 2026 Gulmet Kulmedov. T\u00FCm haklar\u0131 sakl\u0131d\u0131r.", disclaimer: "Gulmet Kulmedov, Seattle merkezli bir finansal dan\u0131\u015Fmand\u0131r. Bu web sitesi yaln\u0131zca bilgilendirme ama\u00E7l\u0131d\u0131r; finansal, vergi veya hukuki tavsiye niteli\u011Fi ta\u015F\u0131maz. G\u00F6sterilen ileti\u015Fim bilgileri \u00F6rnektir." },
+    },
+
+    tk: {
+      nav: { home: "Ba\u015F sahypa", about: "Hakymda", services: "Hyzmatlar", contact: "Habarla\u015Fmak", cta: "Maslahat \u00FC\u00E7in \u00FDazyl\u0131\u0148", role: "Mali\u00FDe Ge\u0148e\u015F\u00E7isi" },
+      hero: {
+        eyebrow: "Sietl \u00B7 Mali\u00FDe Ge\u0148e\u015F\u00E7isi",
+        title: "Ma\u015Fgala\u0148yz \u00FC\u00E7in uzak m\u00F6hletli mali\u00FDe ynamyny d\u00F6red\u00FD\u00E4rin.",
+        subtitle: "Ma\u015Fgalalara, h\u00FCn\u00E4rmenlere we teleke\u00E7ilere i\u0148 gymmatly zatlaryny goramaga we ygtybarly gelje\u011Fi me\u00FDille\u015Fdirmage \u00F6z dili\u0148izde \u00FDardam ber\u00FD\u00E4rin.",
+        ctaPrimary: "Maslahat \u00FC\u00E7in \u00FDazyl\u0131\u0148", ctaSecondary: "Hyzmatlary g\u00F6r\u00FC\u0148",
+        langsLabel: "Maslahat ber\u00FD\u00E4n dillerim", location: "Sietl, AB\u015E",
+      },
+      servicesIntro: { eyebrow: "Men n\u00E4me ed\u00FD\u00E4rin", title: "Durmu\u015Fy\u0148 her tapgyry \u00FC\u00E7in hemmetarapla\u00FDyn maslahat", subtitle: "Maksatlary\u0148yza we ma\u015Fgala\u0148yzy\u0148 gelje\u011Fine g\u00F6r\u00E4 u\u00FDgunla\u015Fdyrylan d\u00F6rt ugur." },
+      services: [
+        { name: "\u00D6m\u00FCr \u00C4ti\u00FDa\u00E7landyry\u015Fy", short: "S\u00F6\u00FDg\u00FClileri\u0148izi ma\u015Fgala\u0148yzy\u0148 zerurlyklaryna we b\u00FDujetine g\u00F6r\u00E4 d\u00FCz\u00FClen \u00E4ti\u00FDa\u00E7landyry\u015F bilen gora\u0148.", long: "Dogry \u00F6m\u00FCr \u00E4ti\u00FDa\u00E7landyry\u015Fy gara\u015Fylmadyk \u00FDagda\u00FDlarda ma\u015Fgala\u0148yza mali\u00FDe goragyny ber\u00FD\u00E4r. Durmu\u015F tapgyry\u0148yza we b\u00FDujeti\u0148ize la\u00FDyk gel\u00FD\u00E4n m\u00F6hletli, \u00F6m\u00FCrlik \u00FDa-da uniwersal \u00E4ti\u00FDa\u00E7landyry\u015Fy sa\u00FDlamaga \u00FDardam ber\u00FD\u00E4rin.", points: ["M\u00F6hletli, \u00F6m\u00FCrlik we uniwersal g\u00F6rn\u00FC\u015Fler", "B\u00FDujeti\u0148ize g\u00F6r\u00E4 gorag", "Girde\u00FDi, ipoteka we bilim goragy"] },
+        { name: "Uzak M\u00F6hletli Ba\u00FDlyk Me\u00FDilnamasy", short: "Ba\u00FDlygy\u0148yzy wagty\u0148 dowamynda artdyrmak we gorap saklamak \u00FC\u00E7in a\u00FDdy\u0148, \u015Fahsy \u00FDol kartasy.", long: "Ba\u00FDlyk t\u00F6t\u00E4nden d\u00F6rem\u00FD\u00E4r \u2014 me\u00FDille\u015Fdiril\u00FD\u00E4r. Bilelikde eml\u00E4kleri\u0148izi artdyr\u00FD\u00E4n, t\u00F6wekgel\u00E7iligi azald\u00FD\u00E4n we her bazar hem durmu\u015F \u00FC\u00FDtgemesinde maksatlary\u0148yzy gorap sakla\u00FD\u00E4n uzak m\u00F6hletli strategi\u00FDa d\u00FCz\u00FD\u00E4ris.", points: ["\u015Eahsy mali\u00FDe \u00FDol kartasy", "Maksada g\u00F6n\u00FCkdirilen tyg\u015Fytlamalar", "Yzygiderli t\u00E4zeden g\u00F6zden ge\u00E7irmek"] },
+        { name: "Pensi\u00FDa we Annuitetler", short: "\u00D6mr\u00FC\u0148izi\u0148 ahyryna \u00E7enli \u00FDeterlik, ygtybarly girde\u00FDi d\u00F6redi\u0148 we arka\u00FDyn pensi\u00FDa \u00E7yky\u0148.", long: "Pensi\u00FDa \u00F6m\u00FCrbo\u00FDy z\u00E4hmeti\u0148 sylagy bolmaly. Tyg\u015Fytlamalary\u0148yzy \u00F6mr\u00FC\u0148izi\u0148 dowamynda dowam etjek annuitetler we pensi\u00FDa strategi\u00FDalary arkaly ygtybarly, kepillendirilen girde\u00FDä \u00F6wurmage \u00FDardam ber\u00FD\u00E4rin.", points: ["\u00D6m\u00FCrlik kepillendirilen girde\u00FDi", "Salyk ta\u00FDdan amatly strategi\u00FDalar", "\u00D6mr\u00FC\u0148 dowamynda girde\u00FDi"] },
+        { name: "Ma\u00FDa go\u00FDumlary we Ba\u00FDlyk Dolandyry\u015Fy", short: "Maksatlary\u0148yza, t\u00F6wekgel\u00E7ilige gara\u00FD\u015Fy\u0148yza we wagt \u00E7\u00E4klerinize la\u00FDyk strategi\u00FDalar.", long: "Akylly ma\u00FDa go\u00FDum \u00F6s\u00FC\u015Fi rahatlyk bilen de\u0148agramla\u015Fdyr\u00FD\u00E4r. Maksatlary\u0148yza we t\u00F6wekgel\u00E7ilik amatlylygy\u0148yza la\u00FDyk d\u00FCrl\u00FCle\u015Fdirilen strategi\u00FDa d\u00F6red\u00FD\u00E4rin, dolandyr\u00FD\u00E4ryn we bazar bilen durmu\u015Fy\u0148yz \u00FC\u00FDtgändigi\u00E7e sazla\u00FD\u00E4ryn.", points: ["D\u00FCrl\u00FCle\u015Fdirilen, maksada la\u00FDyk portfeller", "Amatlylygy\u0148yza g\u00F6r\u00E4 t\u00F6wekgel\u00E7ilik dolandyry\u015Fy", "Yzygiderli maslahat we de\u0148le\u015Fdirme"] },
+      ],
+      why: {
+        eyebrow: "N\u00E4me \u00FC\u00E7in men", title: "Sizi\u0148 dili\u0148izde geple\u00FD\u00E4n ynamdar ge\u0148e\u015F\u00E7i", subtitle: "Di\u0148e \u00F6n\u00FCm d\u00E4l \u2014 ma\u015Fgala\u0148yzy\u0148 gelje\u011Fine go\u015Ful\u00FD\u00E4n hyzmatda\u015F.",
+        points: [
+          { title: "\u00D6z dili\u0148izde maslahat", desc: "I\u0148lis, rus, t\u00FCrk we t\u00FCrkmen \u2014 dil p\u00E4sgel\u00E7iligi bolmazdan a\u00FDdy\u0148 maslahat." },
+          { title: "\u015Eahsy, uzak m\u00F6hletli hyzmatda\u015Flyk", desc: "Maksatlary\u0148yza d\u00FC\u015F\u00FCnmek \u00FC\u00E7in wagt sarp ed\u00FD\u00E4rin we durmu\u015Fy\u0148yz \u00FC\u00FDtgändigi\u00E7e \u00FDany\u0148yzda bol\u00FD\u00E4ryn." },
+          { title: "Ynamdar edaran\u0131\u0148 goldawy", desc: "New York Life mali\u00FDe ge\u0148e\u015F\u00E7isi h\u00F6km\u00FCnde subut edilen \u00F6n\u00FCmleri we durnuklylygy h\u00F6d\u00FCrl\u00FD\u00E4rin." },
+          { title: "\u017Eargon d\u00E4l-de a\u00FDdy\u0148lyk", desc: "\u00C7yl\u015Fyrymly \u00E7\u00F6zg\u00FCtleri \u00FD\u00F6nekey d\u00FC\u015F\u00FCndir\u00FD\u00E4rin, \u015Fonu\u0148 \u00FC\u00E7in g\u00F6zeg\u00E7ilik elmydama sizde bol\u00FD\u00E4r." },
+        ],
+      },
+      about: {
+        eyebrow: "Hakymda", title: "Gulmet Kulmedov", role: "Mali\u00FDe Ge\u0148e\u015F\u00E7isi \u00B7 Sietl",
+        lead: "Ma\u015Fgalalara, h\u00FCn\u00E4rmenlere we teleke\u00E7ilere i\u0148 o\u0148a\u00FDly geple\u00FD\u00E4n dilinde howpsuzlyk we uzak m\u00F6hletli ba\u00FDlyk d\u00F6retmage \u00FDardam ber\u00FD\u00E4n, Sietlde \u00FDerle\u015F\u00FD\u00E4n mali\u00FDe ge\u0148e\u015F\u00E7isi.",
+        body1: "Meni\u0148 \u00FC\u00E7in mali\u00FDe me\u00FDilnamasy \u015Fahsy zat. K\u00F6pdilli jemgy\u00FDet bilen i\u015Fl\u00E4p, hakyky maslahaty\u0148 di\u0148lemekden ba\u015Fla\u00FDandygyna d\u00FC\u015F\u00FCndim \u2014 maksatlary\u0148yzy, aladalary\u0148yzy we ma\u015Fgala\u0148yz \u00FC\u00E7in isle\u00FD\u00E4n gelje\u011Fi\u0148izi.",
+        body2: "New York Life mali\u00FDe ge\u0148e\u015F\u00E7isi h\u00F6km\u00FCnde ynamdar edaran\u0131\u0148 g\u00FC\u00FDjuni gatna\u015Fyga esasla\u00FD\u00E4n \u015Fahsy \u00E7emele\u015Fme bilen birle\u015Fdir\u00FD\u00E4rin. Ma\u015Fgala\u0148yzy goramak, pensi\u00FDa ta\u00FD\u00FDarlanmak \u00FDa-da ba\u00FDlygy\u0148yzy artdyrmak bolsun \u2014 men uzak m\u00F6hletde \u00FDany\u0148yzda.",
+        focusTitle: "\u00DCns ber\u00FD\u00E4n ugurlarym", langTitle: "Geple\u00FD\u00E4n dillerim", valuesTitle: "Gymmat ber\u00FD\u00E4n zatlarym",
+        values: ["Wagty\u0148 dowamynda gazanylan ynam", "Dogru\u00E7yl, \u017Eargonsyz maslahat", "Ilki bilen ma\u015Fgala\u0148yzy\u0148 gelje\u011Fi"],
+      },
+      contact: {
+        eyebrow: "Habarla\u015Fmak", title: "Gelje\u011Fi\u0148izi bilelikde me\u00FDille\u015Fdireli\u0148", subtitle: "Mugt, hi\u00E7 hili bor\u00E7lanmasyz maslahat \u00FC\u00E7in \u00FD\u00FCz tutu\u0148. Bir i\u015F g\u00FCn\u00FCni\u0148 dowamynda jogap bererin.",
+        detailsTitle: "Habarla\u015Fy\u0148", emailLabel: "E-po\u00E7ta", phoneLabel: "Telefon", officeLabel: "Ofis", hoursLabel: "I\u015F wagty", hoursValue: "Du\u015F\u2013Anna \u00B7 9:00\u201318:00 ET\nAg\u015Famlar we dyn\u00E7 g\u00FCnleri \u00FDazgy bo\u00FDun\u00E7a", followLabel: "Yzarla\u0148",
+        form: { name: "Ady we famili\u00FDasy", email: "E-po\u00E7ta salgysy", phone: "Telefon (h\u00F6kman d\u00E4l)", topic: "N\u00E4me bilen k\u00F6mek edip bilerin?", topicOptions: ["\u00D6m\u00FCr \u00C4ti\u00FDa\u00E7landyry\u015Fy", "Ba\u00FDlyk Me\u00FDilnamasy", "Pensi\u00FDa we Annuitetler", "Ma\u00FDa go\u00FDumlary", "Ba\u015Fga zat"], message: "Habary\u0148yz", submit: "Maslahat soramak", success: "Sag bolu\u0148 \u2014 \u00FD\u00FCztutma\u0148yz kabul edildi. Bir i\u015F g\u00FCn\u00FCni\u0148 dowamynda sizi\u0148 bilen habarla\u015Faryn." },
+      },
+      ctaBand: { title: "Indiki \u00E4dimi \u00E4tm\u00E4ge ta\u00FD\u00FDarmy?", subtitle: "\u015Eu g\u00FCn mugt, bor\u00E7lanmasyz maslahata \u00FDazyly\u0148.", button: "Maslahat \u00FC\u00E7in \u00FDazyl\u0131\u0148" },
+      footer: { tagline: "Ma\u015Fgalalar we i\u015Few\u00FCrlik \u00FC\u00E7in mali\u00FDe maslahaty \u2014 \u00F6z dili\u0148izde.", contactTitle: "Habarla\u015Fmak", followTitle: "Yzarlamak", rights: "\u00A9 2026 Gulmet Kulmedov. \u00C4hli hukuklar goralan.", disclaimer: "Gulmet Kulmedov \u2014 Sietlde \u00FDerle\u015F\u00FD\u00E4n mali\u00FDe ge\u0148e\u015F\u00E7isi. Bu web sahypasy di\u0148e maglumat maksatly bolup, mali\u00FDe, salgyt \u00FDa-da hukuk maslahaty d\u00E4ldir. G\u00F6rkezilen habarla\u015Fmak maglumatlary mysal \u00FC\u00E7indir." },
+    },
+  };
+
+  state = { page: "home", lang: this.detectLang(), submitted: false, hoverSvc: null, hoverWhy: null };
+
+  detectLang() {
+    try {
+      const saved = localStorage.getItem("gk_lang");
+      if (saved && this.LANGS.some((l) => l.code === saved)) return saved;
+    } catch (e) {}
+    try {
+      const navs = (navigator.languages || [navigator.language || "en"]).map((s) => (s || "").toLowerCase());
+      for (const n of navs) {
+        if (n.startsWith("ru")) return "ru";
+        if (n.startsWith("tk")) return "tk";
+        if (n.startsWith("tr")) return "tr";
+        if (n.startsWith("en")) return "en";
+      }
+    } catch (e) {}
+    return "en";
+  }
+
+  setLang(code) {
+    try { localStorage.setItem("gk_lang", code); } catch (e) {}
+    this.setState({ lang: code });
+  }
+
+  go(page) {
+    this.setState({ page, submitted: false });
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) { window.scrollTo(0, 0); }
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this.T[lang] || this.T.en;
+    const page = this.state.page;
+    const navColor = (p) => (page === p ? "#0e2238" : "#54647a");
+    const navBorder = (p) => (page === p ? "#b18f54" : "transparent");
+
+    const serviceList = t.services.map((s, i) => ({ ...s, num: "0" + (i + 1) }));
+
+    const mkCard = (i) => {
+      const h = this.state.hoverSvc === i;
+      return {
+        enter: () => this.setState({ hoverSvc: i }),
+        t: h ? "translateY(-8px)" : "translateY(0)",
+        sh: h ? "0 26px 50px -22px rgba(14,34,56,0.5)" : "0 1px 2px rgba(14,34,56,0.04)",
+        border: h ? "rgba(177,143,84,0.55)" : "rgba(19,40,63,0.12)",
+        bar: h ? "1" : "0",
+        ic: h ? "translateY(-3px) scale(1.14)" : "translateY(0) scale(1)",
+        title: h ? "#9c7a3f" : "#0e2238",
+        aOp: h ? "1" : "0",
+        aX: h ? "0px" : "-10px",
+      };
+    };
+
+    const whyPoints = t.why.points.map((p, i) => {
+      const h = this.state.hoverWhy === i;
+      return {
+        num: "0" + (i + 1), title: p.title, desc: p.desc,
+        enter: () => this.setState({ hoverWhy: i }),
+        pad: h ? "24px" : "2px",
+        bg: h ? "#fbf8f1" : "rgba(251,248,241,0)",
+        accent: h ? "inset 3px 0 0 0 #b18f54" : "inset 0 0 0 0 rgba(177,143,84,0)",
+        numColor: h ? "#9c7a3f" : "#c4ac7e",
+        numT: h ? "scale(1.22)" : "scale(1)",
+        titleColor: h ? "#0e2238" : "#1b324c",
+      };
+    });
+    const aboutValues = t.about.values.map((v, i) => ({ num: "0" + (i + 1), text: v }));
+    const langButtons = this.LANGS.map((l) => {
+      const active = l.code === lang;
+      return {
+        code: l.code.toUpperCase(), flag: l.flag, native: l.native,
+        onClick: () => this.setLang(l.code),
+        bg: active ? "#0e2238" : "transparent",
+        border: active ? "#0e2238" : "rgba(19,40,63,0.18)",
+        color: active ? "#f4f1ea" : "#54647a",
+      };
+    });
+    const langDisplay = this.LANGS.map((l) => ({ flag: l.flag, native: l.native }));
+
+    return {
+      t, lang,
+      isHome: page === "home", isAbout: page === "about", isServices: page === "services", isContact: page === "contact",
+      showCta: page !== "contact",
+      goHome: () => this.go("home"), goAbout: () => this.go("about"), goServices: () => this.go("services"), goContact: () => this.go("contact"),
+      homeColor: navColor("home"), aboutColor: navColor("about"), servicesColor: navColor("services"), contactColor: navColor("contact"),
+      homeBorder: navBorder("home"), aboutBorder: navBorder("about"), servicesBorder: navBorder("services"), contactBorder: navBorder("contact"),
+      serviceList, whyPoints, aboutValues, langButtons, langDisplay,
+      c0: mkCard(0), c1: mkCard(1), c2: mkCard(2), c3: mkCard(3),
+      leaveSvc: () => this.setState({ hoverSvc: null }),
+      leaveWhy: () => this.setState({ hoverWhy: null }),
+      s0: serviceList[0], s1: serviceList[1], s2: serviceList[2], s3: serviceList[3],
+      focusList: t.services.map((s) => s.name),
+      contact: this.CONTACT,
+      instaUrl: "https://www.instagram.com/gulmetfinance/",
+      submitted: this.state.submitted, notSubmitted: !this.state.submitted,
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      onReset: () => this.setState({ submitted: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>
