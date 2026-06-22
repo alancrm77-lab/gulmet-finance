@@ -4,10 +4,10 @@ import {
   CONTACT,
   INSTAGRAM_HANDLE,
   INSTAGRAM_URL,
+  WEB3FORMS_KEY,
 } from "../../data/site";
 import { CheckIcon } from "../icons";
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
 type Status = "idle" | "submitting" | "success" | "error";

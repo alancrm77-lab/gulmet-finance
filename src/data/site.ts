@@ -18,6 +18,14 @@ export const CONTACT = {
 export const INSTAGRAM_URL = "https://www.instagram.com/gulmetfinance/";
 export const INSTAGRAM_HANDLE = "@gulmetfinance";
 
+// Web3Forms access key. This is a PUBLIC, client-side key — it ships in the JS
+// bundle by design, so committing it is fine. Submissions go to the inbox you
+// configured in the Web3Forms dashboard. Lock it to your domain there to stop
+// others using your quota. Override per-environment with VITE_WEB3FORMS_KEY.
+export const WEB3FORMS_KEY =
+  (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) ||
+  "f90e4029-ba23-42cc-9422-df2c9faacfd7";
+
 // Public assets must be prefixed with Vite's base so they resolve under the
 // GitHub Pages subpath as well as at the domain root in dev.
 export const PORTRAIT = `${import.meta.env.BASE_URL}assets/gulmet.png`;
