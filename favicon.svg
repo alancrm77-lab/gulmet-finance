@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect x="2" y="2" width="60" height="60" rx="3" fill="#0e2238" stroke="#b18f54" stroke-width="2" />
+  <text x="32" y="33" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Source Serif 4', serif" font-weight="600" font-size="30"
+        letter-spacing="0.5" fill="#c9a86a">GK</text>
+</svg>
